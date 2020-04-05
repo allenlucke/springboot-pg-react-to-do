@@ -30,6 +30,7 @@ public class ToDoController {
     // save to-do
     @PostMapping("to-do-list")
     public ToDo createToDo(@RequestBody ToDo toDo) {
+        toDo.setCompleted(false);
         return this.toDoRepository.save(toDo);
     }
 

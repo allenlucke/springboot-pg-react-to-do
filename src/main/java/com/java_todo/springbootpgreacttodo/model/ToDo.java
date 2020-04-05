@@ -3,15 +3,15 @@ package com.java_todo.springbootpgreacttodo.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "to-do-list")
+@Table(name = "to_do_list")
 public class ToDo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "todo")
-    private String todo;
+    @Column(name = "task")
+    private String task;
 
     @Column(name = "completed")
     private Boolean completed;
@@ -20,8 +20,8 @@ public class ToDo {
         super();
     }
 
-    public ToDo(String todo, Boolean completed) {
-        this.todo = todo;
+    public ToDo(String task, Boolean completed) {
+        this.task = task;
         this.completed = completed;
     }
 
@@ -34,11 +34,11 @@ public class ToDo {
     }
 
     public String getTask() {
-        return todo;
+        return task;
     }
 
     public void setTask(String task) {
-        this.todo = todo;
+        this.task = task;
     }
 
     public Boolean getCompleted() {
