@@ -1,6 +1,7 @@
 {
   "name": "springboot-pg-react-to-do",
   "version": "1.0.0",
+  "private": true,
   "description": "",
   "main": "index.js",
   "dependencies": {
