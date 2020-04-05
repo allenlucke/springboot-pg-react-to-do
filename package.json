@@ -1,0 +1,46 @@
+{
+  "name": "springboot-pg-react-to-do",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@material-ui/core": "^4.9.5",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/styles": "^4.9.0",
+    "@sweetalert/with-react": "^0.1.1",
+    "axios": "^0.18.0",
+    "currency": "^4.1.0",
+    "dotenv": "^4.0.0",
+    "moment": "^2.24.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-redux": "^6.0.1",
+    "react-router-dom": "^5.0.0",
+    "react-scripts": "^3.0.1",
+    "redux": "^4.0.1",
+    "redux-logger": "^3.0.6",
+    "redux-saga": "^1.0.2",
+    "sweetalert": "^2.1.2",
+    "sweetalert2": "^9.8.2",
+    "sweetalert2-react": "^0.8.3",
+    "uuid": "^7.0.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "react-scripts start",
+    "build": "react-scripts build",
+    "tsc": "tsc -p tsconfig.node.json",
+    "eject": "react-scripts eject"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allenlucke/springboot-pg-react-to-do.git"
+  },
+  "author": "Allen M. Lucke",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/allenlucke/springboot-pg-react-to-do/issues"
+  },
+  "homepage": "https://github.com/allenlucke/springboot-pg-react-to-do#readme"
+}
