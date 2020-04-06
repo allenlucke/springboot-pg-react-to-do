@@ -1,4 +1,5 @@
 import { all } from 'redux-saga/effects';
+import getToDosSaga from './getToDos.saga';
 
 
 // rootSaga is the primary saga.
@@ -10,6 +11,6 @@ import { all } from 'redux-saga/effects';
 // and login triggers setting the user
 export default function* rootSaga() {
   yield all([
-
+    getToDosSaga(),
   ]);
 }
