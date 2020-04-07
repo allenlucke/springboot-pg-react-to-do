@@ -13,16 +13,30 @@ public class ToDo {
     @Column(name = "task")
     private String task;
 
+
     @Column(name = "completed")
     private Boolean completed;
+
+    @Column(name = "assignedOn")
+    private String assignedOn;
+
+    @Column(name = "dueBy")
+    private String dueBy;
+
+    @Column(name = "whenCompleted")
+    private String whenCompleted;
 
     public ToDo() {
         super();
     }
 
-    public ToDo(String task, Boolean completed) {
+    public ToDo(long id, String task, Boolean completed, String assignedOn, String dueBy, String whenCompleted) {
+        this.id = id;
         this.task = task;
         this.completed = completed;
+        this.assignedOn = assignedOn;
+        this.dueBy = dueBy;
+        this.whenCompleted = whenCompleted;
     }
 
     public long getId() {
@@ -47,5 +61,29 @@ public class ToDo {
 
     public void setCompleted(Boolean completed) {
         this.completed = completed;
+    }
+
+    public String getAssignedOn() {
+        return assignedOn;
+    }
+
+    public void setAssignedOn(String assignedOn) {
+        this.assignedOn = assignedOn;
+    }
+
+    public String getDueBy() {
+        return dueBy;
+    }
+
+    public void setDueBy(String dueBy) {
+        this.dueBy = dueBy;
+    }
+
+    public String getWhenCompleted() {
+        return whenCompleted;
+    }
+
+    public void setWhenCompleted(String whenCompleted) {
+        this.whenCompleted = whenCompleted;
     }
 }
