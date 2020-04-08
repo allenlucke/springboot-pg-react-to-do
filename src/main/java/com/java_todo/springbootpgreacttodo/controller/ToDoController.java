@@ -46,6 +46,7 @@ public class ToDoController {
 
         toDo.setTask(toDoDetails.getTask());
         toDo.setCompleted(toDoDetails.getCompleted());
+        toDo.setAssigned_on(toDoDetails.getAssigned_on());
 
         return ResponseEntity.ok(this.toDoRepository.save(toDo));
     }
