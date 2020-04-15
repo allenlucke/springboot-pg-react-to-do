@@ -5,6 +5,7 @@ import com.java_todo.springbootpgreacttodo.exception.ResourceNotFoundException;
 import com.java_todo.springbootpgreacttodo.model.ToDo;
 import com.java_todo.springbootpgreacttodo.repository.ToDoRepository;
 
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class ToDoController {
 
     // get to-dos
     @GetMapping("to-do-list")
-    public List<ToDo> getAllToDo(){
+    public List<ToDo> getAllToDo() {
         return this.toDoRepository.findAll();
     }
 
@@ -40,7 +41,7 @@ public class ToDoController {
     // update to-do
     @PutMapping("to-do-list/{id}")
     public ResponseEntity<ToDo> updateToDo(@PathVariable(value = "id") Long toDoId,
-                                           @Valid @RequestBody ToDo toDoDetails) throws ResourceNotFoundException{
+                                           @Valid @RequestBody ToDo toDoDetails) throws ResourceNotFoundException {
         ToDo toDo = toDoRepository.findById(toDoId)
                 .orElseThrow(() -> new ResourceNotFoundException("To Do not found for this id :: " + toDoId));
 
@@ -53,7 +54,7 @@ public class ToDoController {
 
     // delete to-do
     @DeleteMapping("to-do-list/{id}")
-    public Map<String, Boolean> deleteToDo(@PathVariable(value = "id") Long toDoId) throws ResourceNotFoundException{
+    public Map<String, Boolean> deleteToDo(@PathVariable(value = "id") Long toDoId) throws ResourceNotFoundException {
         ToDo toDo = toDoRepository.findById(toDoId)
                 .orElseThrow(() -> new ResourceNotFoundException("To Do not found for this id :: " + toDoId));
 
