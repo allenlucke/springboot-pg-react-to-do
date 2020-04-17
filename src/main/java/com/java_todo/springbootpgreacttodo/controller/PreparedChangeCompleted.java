@@ -30,10 +30,13 @@ public class PreparedChangeCompleted {
     private static final String PASSWORD = "";
 //    PreparedStatement pstmt = null;
 
-    @PutMapping("to-do-list/preparedPut")
-    public static void main(String[] args) {
+    @PutMapping("to-do-list/preparedPut/{id}")
+
+    public static void main(String[] args, @PathVariable(value = "id") Long toDoId) {
+
         String sqlQuery = "UPDATE \"to_do_list\" SET \"completed\" = TRUE\n" +
-                "WHERE \"id\" = 3;";
+                "WHERE \"id\" = 3\n" +
+                "returning id;";
 
         try {
 //            Class.forName("com.postgresql.jdbc.Driver");
