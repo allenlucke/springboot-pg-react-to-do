@@ -1,25 +1,14 @@
 package com.java_todo.springbootpgreacttodo.controller;
+
 import com.java_todo.springbootpgreacttodo.repository.ToDoRepository;
-
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.sql.Statement;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 @RestController
 @RequestMapping("/api/v1")
-public class PreparedChangeCompleted {
+public class PreparedChangeGet {
 
     @Autowired
     private ToDoRepository toDoRepository;
@@ -30,17 +19,23 @@ public class PreparedChangeCompleted {
     private static final String PASSWORD = "";
 //    PreparedStatement pstmt = null;
 
-    @PutMapping("to-do-list/preparedPut/{id}")
+    @GetMapping("to-do-list/preparedGet/{id}")
     public static void main(String[] args, @PathVariable(value = "id") Long toDoId) {
-        String sqlQuery = "UPDATE \"to_do_list\" SET \"completed\" = TRUE\n" +
-                "WHERE \"id\" = 3\n" +
-                "returning id;";
+        String sqlQuery = "SELECT * FROM \"to_do_list\"\n" +
+                "WHERE \"id\" = 3;";
         try {
 //            Class.forName("com.postgresql.jdbc.Driver");
             Connection conn = DriverManager.getConnection(HOST+DB,USER,PASSWORD);
 
             PreparedStatement preparedSelect = conn.prepareStatement(sqlQuery);
             ResultSet rs = preparedSelect.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                String task = rs.getString(2);
+                System.out.printf("%d\t%s\n", id, task);
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
