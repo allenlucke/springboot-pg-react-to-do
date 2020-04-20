@@ -95,4 +95,24 @@ public class ToDoController {
         return getToDo;
     }
 
+    @PutMapping("to-do-list/putTorF/{id}")
+    public List<ToDo> putToDo(@PathVariable(value ="id") long toDoId) {
+        String sqlQuery = "UPDATE \"to_do_list\" SET \"completed\" = NOT \"completed\" WHERE id = ?\n" +
+                "returning * ;";
+        List<ToDo> putToDo = new ArrayList<>();
+
+        try (Connection con = DriverManager.getConnection(HOST + DB, USER, PASSWORD);
+             PreparedStatement ps = con.prepareStatement(sqlQuery);) {
+            ps.setLong(1, toDoId);
+            try (ResultSet rs = ps.executeQuery();) {
+                while (rs.next()) {
+                    putToDo.add(new ToDo(rs.getLong("id"), rs.getString("task"), rs.getBoolean("completed"),
+                            rs.getTimestamp("assigned_on"), rs.getTimestamp("due_by"), rs.getTimestamp("when_completed")));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return putToDo;
+    }
 }
