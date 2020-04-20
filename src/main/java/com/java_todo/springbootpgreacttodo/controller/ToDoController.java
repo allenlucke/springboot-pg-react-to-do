@@ -5,7 +5,9 @@ import com.java_todo.springbootpgreacttodo.exception.ResourceNotFoundException;
 import com.java_todo.springbootpgreacttodo.model.ToDo;
 import com.java_todo.springbootpgreacttodo.repository.ToDoRepository;
 
+import java.sql.*;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +25,10 @@ public class ToDoController {
 
     @Autowired
     private ToDoRepository toDoRepository;
-
+    private static final String HOST = "jdbc:postgresql://localhost:5432/";
+    private static final String DB = "to-do-java";
+    private static final String USER = "allenlucke";
+    private static final String PASSWORD = "";
     // get to-dos
     @GetMapping("to-do-list")
     public List<ToDo> getAllToDo() {
@@ -64,6 +69,30 @@ public class ToDoController {
         response.put("deleted", Boolean.TRUE);
 
         return response;
+    }
+
+    @GetMapping("to-do-list/new/{id}")
+    public List<ToDo> getToDo(@PathVariable(value = "id") long toDoId) {
+        String sqlQuery = "SELECT * FROM to_do_list WHERE id = ?";
+        List<ToDo> getToDo = new ArrayList<>();
+
+        try (Connection con = DriverManager.getConnection(HOST+DB,USER,PASSWORD);
+             PreparedStatement ps = con.prepareStatement(sqlQuery);) {
+            ps.setLong(1, toDoId);
+            try (ResultSet rs = ps.executeQuery();) {
+                while(rs.next()) {
+//                    long id = rs.getLong(1);
+//                    String task = rs.getString(2);
+//
+//                    System.out.printf("%d\t%s\n", id, task);
+                    getToDo.add(new ToDo(rs.getLong("id"), rs.getString("task"), rs.getBoolean("completed"),
+                            rs.getTimestamp("assigned_on"), rs.getTimestamp("due_by"), rs.getTimestamp("when_completed")));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return getToDo;
     }
 
 }

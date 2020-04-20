@@ -39,6 +39,9 @@ public class ToDo {
     @Column(name = "when_completed")
     private Timestamp when_completed;
 
+//    public ToDo(long id, String task) {
+//    }
+
 
     public long getId() {
         return id;
