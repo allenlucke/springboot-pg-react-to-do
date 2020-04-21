@@ -1,6 +1,7 @@
 
 
 package com.java_todo.springbootpgreacttodo.controller;
+//Imports
 import com.java_todo.springbootpgreacttodo.exception.ResourceNotFoundException;
 import com.java_todo.springbootpgreacttodo.model.ToDo;
 import com.java_todo.springbootpgreacttodo.repository.ToDoRepository;
@@ -18,17 +19,21 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+//Allows external client connection
 @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/v1")
 public class ToDoController {
 
     @Autowired
+    //Connects to repository
     private ToDoRepository toDoRepository;
+    //Strings for DB connection
     private static final String HOST = "jdbc:postgresql://localhost:5432/";
     private static final String DB = "to-do-java";
     private static final String USER = "allenlucke";
     private static final String PASSWORD = "";
+
     // get to-dos
     @GetMapping("to-do-list")
     public List<ToDo> getAllToDo() {
@@ -71,6 +76,7 @@ public class ToDoController {
         return response;
     }
 
+    //Single list item GET
     @GetMapping("to-do-list/new/{id}")
     public List<ToDo> getToDo(@PathVariable(value = "id") long toDoId) {
         String sqlQuery = "SELECT * FROM to_do_list WHERE id = ?";
@@ -95,10 +101,11 @@ public class ToDoController {
         return getToDo;
     }
 
+    //Put to flip completed from True/False, and vice versa
     @PutMapping("to-do-list/putTorF/{id}")
     public List<ToDo> putToDo(@PathVariable(value ="id") long toDoId) {
         String sqlQuery = "UPDATE \"to_do_list\" SET \"completed\" = NOT \"completed\" WHERE id = ?\n" +
-                "returning * ;";
+                "returning *;";
         List<ToDo> putToDo = new ArrayList<>();
 
         try (Connection con = DriverManager.getConnection(HOST + DB, USER, PASSWORD);
