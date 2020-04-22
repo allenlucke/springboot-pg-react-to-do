@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -122,4 +123,51 @@ public class ToDoController {
         }
         return putToDo;
     }
+
+    //Put to add date completed to task
+    @PutMapping("to-do-list/whenCompleted/{id}/{timestamp}")
+    public List<ToDo> putWhenCompleted (@PathVariable(value ="id") long toDoId, @PathVariable(value="timestamp") Timestamp timestamp) {
+        String sqlQuery = "UPDATE \"to_do_list\" SET \"when_completed\" = ? WHERE id = ?\n" +
+                "returning *;";
+        List<ToDo> putWhenCompleted = new ArrayList<>();
+
+        try (Connection con = DriverManager.getConnection(HOST + DB, USER, PASSWORD);
+             PreparedStatement ps = con.prepareStatement(sqlQuery);) {
+            ps.setLong(2, toDoId);
+            ps.setTimestamp(1, timestamp);
+            try (ResultSet rs = ps.executeQuery();) {
+                while (rs.next()) {
+                    putWhenCompleted.add(new ToDo(rs.getLong("id"), rs.getString("task"), rs.getBoolean("completed"),
+                            rs.getTimestamp("assigned_on"), rs.getTimestamp("due_by"), rs.getTimestamp("when_completed")));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return putWhenCompleted;
+    }
+
+    //Put to edit task
+    @PutMapping("to-do-list/editTask/{id}")
+    public List<ToDo> putEditTask (@PathVariable(value ="id") long toDoId, @RequestBody String task) {
+        String sqlQuery = "UPDATE \"to_do_list\" SET \"task\" = ? WHERE id = ?\n" +
+                "returning *;";
+        List<ToDo> putEditTask = new ArrayList<>();
+
+        try (Connection con = DriverManager.getConnection(HOST + DB, USER, PASSWORD);
+             PreparedStatement ps = con.prepareStatement(sqlQuery);) {
+            ps.setLong(2, toDoId);
+            ps.setString(1, task);
+            try (ResultSet rs = ps.executeQuery();) {
+                while (rs.next()) {
+                    putEditTask.add(new ToDo(rs.getLong("id"), rs.getString("task"), rs.getBoolean("completed"),
+                            rs.getTimestamp("assigned_on"), rs.getTimestamp("due_by"), rs.getTimestamp("when_completed")));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return putEditTask;
+    }
 }
+//    java.sql.Date currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
